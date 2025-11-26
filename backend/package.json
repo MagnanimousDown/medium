@@ -1,0 +1,19 @@
+{
+  "name": "backend",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy --minify",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
+  },
+  "dependencies": {
+    "@omkar_dev/medium": "^1.0.2",
+    "@prisma/client": "^6.19.0",
+    "@prisma/extension-accelerate": "^2.0.2",
+    "hono": "^4.10.6",
+    "prisma": "^6.19.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.47.0"
+  }
+}

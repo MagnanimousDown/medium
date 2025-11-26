@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme {
+    --font-georgia: "Georgia", serif;
+    --font-sohne: "Sohne", serif;
+}
