@@ -7,7 +7,7 @@ export function Signin(){
             <div>
                 <Auth type="signin"></Auth>
             </div>
-            <div className="hidden md:block">
+            <div className="hidden lg:block">
                 <Quote></Quote>
             </div>
         </div>

@@ -14,21 +14,24 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
-  email String @unique
-  name String? 
-  password String
-  salt String
+  id                  String      @id @default(uuid())
+  email               String      @unique
+  name                String? 
+  password            String
+  salt                String
+  isVerified          Boolean     @default(false)
+  verificationToken   String?
+  tokenExpires        DateTime?
   posts Post[]
 }
 
 model Post {
-  id String @id @default(uuid())
-  title String
-  content String
-  published Boolean @default(false)
-  publishedAt DateTime @default(now())
-  author User @relation(fields: [authorId], references: [id])
-  authorId String
+  id              String      @id @default(uuid())
+  title           String
+  content         String
+  published       Boolean     @default(false)
+  publishedAt     DateTime    @default(now())
+  author          User        @relation(fields: [authorId], references: [id])
+  authorId        String
   
 }

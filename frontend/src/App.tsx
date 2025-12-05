@@ -4,6 +4,8 @@ import { Signin } from './pages/Signin'
 import { Blog } from './pages/Blog'
 import { Blogs } from './pages/Blogs'
 import { CreateBlog } from './pages/CreateBlog'
+import { VerifyInstructionPage } from './pages/VerifyInstructionPage'
+import { EmailVerificationHandler } from './pages/EmailVerificationHandler'
 
 function App() {
 
@@ -17,7 +19,9 @@ function App() {
           {/* <Route path='/' element={<Blogs />}></Route> */}
           <Route path='/' element={<Signup />}></Route>
           <Route path='/blogs' element={<Blogs />}></Route>
-          <Route path='/new-blog' element={<CreateBlog/>}></Route>
+          <Route path='/new-blog' element={<CreateBlog />}></Route>
+          <Route path='/verify' element={<VerifyInstructionPage />}></Route>
+          <Route path='/verify-email/:token' element={<EmailVerificationHandler />}></Route>
         </Routes>
       </BrowserRouter> 
     </>

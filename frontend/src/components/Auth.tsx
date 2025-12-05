@@ -17,7 +17,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
         :{ email: "", password: "" }
     )
 
-    const sendRequest = async (type : string) => {
+    const sendSignInRequest = async (type : string) => {
         toast.promise(
             axios.post(`${BACKEND_URL}/api/v1/user/${type}`, postInputs),
             {
@@ -36,6 +36,20 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
                 }
             }
         );
+    }
+
+    const sendSignUpRequest = async(type: string) => {
+        try {
+            await axios.post(`${BACKEND_URL}/api/v1/user/${type}`, postInputs)
+            navigate("/verify")
+        } catch (error) {
+            toast.error("Error while signing up!", {
+                style: {
+                    background: "black",
+                    color: "white"
+                }
+            })
+        }
     }
 
     return <div className="h-screen flex flex-col justify-center">
@@ -76,7 +90,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
             }}></LabelledInput>
 
             <p className="text-black bg-slate-300 font-light text-sm px-2 py-1 border border-slate-300 rounded-md">Password must be at least 8 characters</p>
-            <Button onClick={() => type === "signup" ? sendRequest("signup") : sendRequest("signin")}>{type === "signup" ? "Sign Up" : "Sign In"}</Button>
+            <Button onClick={() => type === "signup" ? sendSignUpRequest("signup") : sendSignInRequest("signin")}>{type === "signup" ? "Sign Up" : "Sign In"}</Button>
         </div>
     </div>
 }

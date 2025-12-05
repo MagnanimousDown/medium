@@ -91,3 +91,37 @@ export const useBlog = ({ id }: {id: string}) => {
         blog
     }
 }
+
+export const useSignup = ({ token }: { token: string }) => {
+    const [loading, setLoading] = useState(true)
+    const [success, setSuccess] = useState(false)
+    const [errorMessage, setErrorMessage] = useState<string>("")
+    useEffect(() => {
+        
+        const sendRequest = async () => {
+        try {
+            await axios.post(`${BACKEND_URL}/api/v1/user/verify/${token}`)
+            setSuccess(true)
+            setLoading(false)
+            
+        } catch (error: any) {
+            toast.error("Verification failed!", {
+                style: {
+                    background: 'black',
+                    color: 'white',
+                }
+            })
+            setErrorMessage(error.response?.data?.message)
+            setLoading(false)
+        }
+    }
+    sendRequest()
+
+    }, [token])
+    
+    return {
+        loading,
+        success,
+        errorMessage
+    }
+}
