@@ -217,7 +217,12 @@ user.post("/signin", async (c) => {
     }, 401)
   }
   
+
+  // Generate the token
+  const token = await sign({ userId: existingUser.id }, c.env.JWT_SECRET)
+  
   return c.json({
+      token: token,
       message: "Verified successfully"
     }, 200)
 
