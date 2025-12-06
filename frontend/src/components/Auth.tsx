@@ -16,39 +16,56 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
         ? { name: "", email: "", password: "" }
         :{ email: "", password: "" }
     )
+    const [loading, setLoading] = useState(false);
 
     const sendSignInRequest = async (type : string) => {
-        toast.promise(
-            axios.post(`${BACKEND_URL}/api/v1/user/${type}`, postInputs),
-            {
-                loading: 'Loading...',
-                success: (response) => {
-                    // axios response is available here
-                    localStorage.setItem("token", `Bearer ${response.data.token}`);
-                    navigate("/blogs");
-                    return type === "signup" ? `Signed up successfully!` : `Signed in successfully!`;
-                },
-
-                error: type === "signup" ? `Error Signing Up!` : `Error Signing In!`,
-                style: {
-                    background: "black",
-                    color: "white"
+        setLoading(true)
+        try {
+            toast.promise(
+                axios.post(`${BACKEND_URL}/api/v1/user/${type}`, postInputs),
+                {
+                    loading: 'Loading...',
+                    success: (response) => {
+                        // axios response is available here
+                        localStorage.setItem("token", `Bearer ${response.data.token}`);
+                        navigate("/blogs");
+                        return type === "signup" ? `Signed up successfully!` : `Signed in successfully!`;
+                    },
+    
+                    error: type === "signup" ? `Error Signing Up!` : `Error Signing In!`,
+                    style: {
+                        background: "black",
+                        color: "white"
+                    }
                 }
-            }
-        );
+            );
+        }
+        finally {
+            setLoading(false);
+        }
     }
 
     const sendSignUpRequest = async(type: string) => {
+        setLoading(true);
         try {
-            await axios.post(`${BACKEND_URL}/api/v1/user/${type}`, postInputs)
-            navigate("/verify")
-        } catch (error) {
-            toast.error("Error while signing up!", {
-                style: {
-                    background: "black",
-                    color: "white"
+            toast.promise(
+                axios.post(`${BACKEND_URL}/api/v1/user/${type}`, postInputs),
+                {
+                    loading: 'Creating account...',
+                    success: () => {
+                        navigate("/verify")
+                        return 'Verification email sent!';
+                    },
+
+                    error: 'Error while signing up!',
+                    style: {
+                        background: "black",
+                        color: "white"
+                    }
                 }
-            })
+            )
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -90,7 +107,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
             }}></LabelledInput>
 
             <p className="text-black bg-slate-300 font-light text-sm px-2 py-1 border border-slate-300 rounded-md">Password must be at least 8 characters</p>
-            <Button onClick={() => type === "signup" ? sendSignUpRequest("signup") : sendSignInRequest("signin")}>{type === "signup" ? "Sign Up" : "Sign In"}</Button>
+            <Button onClick={() => type === "signup" ? sendSignUpRequest("signup") : sendSignInRequest("signin")}>{loading ? "Please wait..." : type === "signup" ? "Sign Up" : "Sign In"}</Button>
         </div>
     </div>
 }
