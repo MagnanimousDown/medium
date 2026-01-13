@@ -4,6 +4,7 @@ import axios from "axios"
 import { BACKEND_URL } from "../config"
 import { useNavigate } from "react-router-dom"
 import { toast } from 'sonner';
+import Tiptap from "../features/editor/components/Tiptap"
 
 // We need to pass email and name to CreateBlogBar component
 export const CreateBlog = () => {
@@ -65,6 +66,9 @@ export const CreateBlog = () => {
                     setContent(content);
                 }} ref={contentRef} onInput={ () => handleInput(contentRef) } name="content" id="content" placeholder="Tell your story..." className="text-xl font-serif text-slate-600 focus:outline-none resize-none w-full h-auto pl-4"/>
 
+            </div>
+            <div>
+                <Tiptap />
             </div>
         </div>
         </div>
